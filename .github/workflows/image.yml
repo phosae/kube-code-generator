@@ -13,7 +13,7 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
-      - name: Checkout copier
+      - name: Checkout Repository
         uses: actions/checkout@master
         with:
           repository: phosae/kube-code-generator
@@ -40,4 +40,4 @@ jobs:
             zengxu/kube-code-generator:${{github.ref_name}}
           platforms: |
             linux/amd64,linux/arm64
-          push: ${{ github.ref == 'refs/heads/main' }}
+          push: true
