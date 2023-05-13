@@ -26,19 +26,12 @@ RUN wget http://github.com/kubernetes/kubernetes/archive/v${KUBE_VERSION}.tar.gz
     rm v${KUBE_VERSION}.tar.gz && \
     \
     cd /go/src/k8s.io/code-generator/ && \
-    GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o protoc-gen-gogo ./cmd/go-to-protobuf/protoc-gen-gogo && \
-    GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o go-to-protobuf ./cmd/go-to-protobuf && \
+    GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o /usr/bin/protoc-gen-gogo ./cmd/go-to-protobuf/protoc-gen-gogo && \
+    GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o /usr/bin/go-to-protobuf  ./cmd/go-to-protobuf && \
     GOOS=${TARGETOS} GOARCH=${TARGETARCH} GOBIN=/usr/bin go install golang.org/x/tools/cmd/goimports@latest && \
-    mv ./protoc-gen-gogo /usr/bin/ && \
-    mv ./go-to-protobuf /usr/bin/ && cd - && \
+    cd - && \
     \
-    wget https://github.com/kubernetes-sigs/controller-tools/archive/v${CONTROLLER_GEN_VERSION}.tar.gz && \
-    tar xvf ./v${CONTROLLER_GEN_VERSION}.tar.gz && \
-    cd ./controller-tools-${CONTROLLER_GEN_VERSION}/ && \
-    GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o controller-gen  ./cmd/controller-gen/ && \
-    mv ./controller-gen /usr/bin/ && \
-    rm -rf ../v${CONTROLLER_GEN_VERSION}.tar.gz && \
-    rm -rf ../controller-tools-${CONTROLLER_GEN_VERSION} && \
+    GOOS=${TARGETOS} GOARCH=${TARGETARCH} GOBIN=/usr/bin go install sigs.k8s.io/controller-tools/cmd/controller-gen@v${CONTROLLER_GEN_VERSION} && \
     rm -rf /go/pkg
 
 COPY hack/install-protoc.sh /go/install-protoc.sh
