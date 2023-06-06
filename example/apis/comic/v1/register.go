@@ -5,7 +5,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	kubecodegeneratorcomic "github.com/slok/kube-code-generator/example/apis/comic"
+	kubecodegeneratorcomic "github.com/phosae/kube-code-generator/example/apis/comic"
 )
 
 const (

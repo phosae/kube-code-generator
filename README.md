@@ -1,7 +1,7 @@
 # Kube code generator
 
 [![Docker Repository on Quay](https://quay.io/repository/slok/kube-code-generator/status "Docker Repository on Quay")](https://hub.docker.com/r/zengxu/kube-code-generator/tags)
-![Kubernetes release](https://img.shields.io/badge/Kubernetes-v1.27-green?logo=Kubernetes&style=flat&color=326CE5&logoColor=white)
+![Kubernetes release](https://img.shields.io/badge/Kubernetes-v1.28-green?logo=Kubernetes&style=flat&color=326CE5&logoColor=white)
 
 A kubernetes code generator container that makes easier to create CRD manifests (registration API) and clients.
 
@@ -16,7 +16,8 @@ Uses [official code-generator](https://github.com/kubernetes/code-generator) cre
 
 |                  | Docker image                                            |
 | ---------------- | ------------------------------------------------------- |
-| Kubernetes v1.27 | `docker pull zengxu/kube-code-generator:v1.27.2`     |
+| Kubernetes v1.28 | `docker pull zengxu/kube-code-generator:1.28.0-alpha.1` |
+| Kubernetes v1.27 | `docker pull zengxu/kube-code-generator:v1.27.2`        |
 | Kubernetes v1.26 | `docker pull quay.io/slok/kube-code-generator:v1.26.0`  |
 | Kubernetes v1.25 | `docker pull quay.io/slok/kube-code-generator:v1.25.0`  |
 | Kubernetes v1.24 | `docker pull quay.io/slok/kube-code-generator:v1.24.0`  |

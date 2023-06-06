@@ -1,4 +1,4 @@
-module github.com/slok/kube-code-generator/example
+module github.com/phosae/kube-code-generator/example
 
 go 1.19
 
