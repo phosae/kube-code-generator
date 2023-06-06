@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
-	comicv1 "github.com/slok/kube-code-generator/example/client/clientset/versioned/typed/comic/v1"
+	comicv1 "github.com/phosae/kube-code-generator/example/client/clientset/versioned/typed/comic/v1"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"
 	flowcontrol "k8s.io/client-go/util/flowcontrol"

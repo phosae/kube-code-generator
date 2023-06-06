@@ -5,8 +5,8 @@ package v1
 import (
 	"net/http"
 
-	v1 "github.com/slok/kube-code-generator/example/apis/comic/v1"
-	"github.com/slok/kube-code-generator/example/client/clientset/versioned/scheme"
+	v1 "github.com/phosae/kube-code-generator/example/apis/comic/v1"
+	"github.com/phosae/kube-code-generator/example/client/clientset/versioned/scheme"
 	rest "k8s.io/client-go/rest"
 )
 

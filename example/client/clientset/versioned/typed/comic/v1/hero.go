@@ -4,10 +4,13 @@ package v1
 
 import (
 	"context"
+	json "encoding/json"
+	"fmt"
 	"time"
 
-	v1 "github.com/slok/kube-code-generator/example/apis/comic/v1"
-	scheme "github.com/slok/kube-code-generator/example/client/clientset/versioned/scheme"
+	v1 "github.com/phosae/kube-code-generator/example/apis/comic/v1"
+	comicv1 "github.com/phosae/kube-code-generator/example/client/applyconfiguration/comic/v1"
+	scheme "github.com/phosae/kube-code-generator/example/client/clientset/versioned/scheme"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
 	watch "k8s.io/apimachinery/pkg/watch"
@@ -31,6 +34,8 @@ type HeroInterface interface {
 	List(ctx context.Context, opts metav1.ListOptions) (*v1.HeroList, error)
 	Watch(ctx context.Context, opts metav1.ListOptions) (watch.Interface, error)
 	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts metav1.PatchOptions, subresources ...string) (result *v1.Hero, err error)
+	Apply(ctx context.Context, hero *comicv1.HeroApplyConfiguration, opts metav1.ApplyOptions) (result *v1.Hero, err error)
+	ApplyStatus(ctx context.Context, hero *comicv1.HeroApplyConfiguration, opts metav1.ApplyOptions) (result *v1.Hero, err error)
 	HeroExpansion
 }
 
@@ -161,6 +166,60 @@ func (c *heros) Patch(ctx context.Context, name string, pt types.PatchType, data
 		Name(name).
 		SubResource(subresources...).
 		VersionedParams(&opts, scheme.ParameterCodec).
+		Body(data).
+		Do(ctx).
+		Into(result)
+	return
+}
+
+// Apply takes the given apply declarative configuration, applies it and returns the applied hero.
+func (c *heros) Apply(ctx context.Context, hero *comicv1.HeroApplyConfiguration, opts metav1.ApplyOptions) (result *v1.Hero, err error) {
+	if hero == nil {
+		return nil, fmt.Errorf("hero provided to Apply must not be nil")
+	}
+	patchOpts := opts.ToPatchOptions()
+	data, err := json.Marshal(hero)
+	if err != nil {
+		return nil, err
+	}
+	name := hero.Name
+	if name == nil {
+		return nil, fmt.Errorf("hero.Name must be provided to Apply")
+	}
+	result = &v1.Hero{}
+	err = c.client.Patch(types.ApplyPatchType).
+		Resource("heros").
+		Name(*name).
+		VersionedParams(&patchOpts, scheme.ParameterCodec).
+		Body(data).
+		Do(ctx).
+		Into(result)
+	return
+}
+
+// ApplyStatus was generated because the type contains a Status member.
+// Add a +genclient:noStatus comment above the type to avoid generating ApplyStatus().
+func (c *heros) ApplyStatus(ctx context.Context, hero *comicv1.HeroApplyConfiguration, opts metav1.ApplyOptions) (result *v1.Hero, err error) {
+	if hero == nil {
+		return nil, fmt.Errorf("hero provided to Apply must not be nil")
+	}
+	patchOpts := opts.ToPatchOptions()
+	data, err := json.Marshal(hero)
+	if err != nil {
+		return nil, err
+	}
+
+	name := hero.Name
+	if name == nil {
+		return nil, fmt.Errorf("hero.Name must be provided to Apply")
+	}
+
+	result = &v1.Hero{}
+	err = c.client.Patch(types.ApplyPatchType).
+		Resource("heros").
+		Name(*name).
+		SubResource("status").
+		VersionedParams(&patchOpts, scheme.ParameterCodec).
 		Body(data).
 		Do(ctx).
 		Into(result)

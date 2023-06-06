@@ -3,7 +3,7 @@
 package fake
 
 import (
-	comicv1 "github.com/slok/kube-code-generator/example/apis/comic/v1"
+	comicv1 "github.com/phosae/kube-code-generator/example/apis/comic/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
