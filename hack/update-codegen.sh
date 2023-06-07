@@ -7,15 +7,6 @@ set -eufo pipefail
 #CLIENT_GENERATOR_OUT=${PROJECT_PACKAGE}/client
 #APIS_ROOT=${PROJECT_PACKAGE}/apis
 #
-## Ugly but needs to be relative if we want to use k8s.io/code-generator
-## as it is without touching/sed-ing the code/scripts
-#RELATIVE_ROOT_PATH=$(realpath --relative-to="${PWD}" /)
-#CODEGEN_PKG=${RELATIVE_ROOT_PATH}${GOPATH}/src/k8s.io/code-generator
-#
-## Add all groups space separated.
-## Example: GROUPS_VERSION="xxxx:v1alpha1 yyyy:v1"
-#GROUPS_VERSION="test:v1alpha1"
-#
 ## Generation targets
 ## Example:
 #GENERATION_TARGETS="helpers,openapi,client"
@@ -50,14 +41,6 @@ if grep -qw "helpers" <<<"${GENERATION_TARGETS}"; then
     --boilerplate "${BOILERPLATE_PATH}"
 fi
 
-if grep -qw "openapi" <<<"${GENERATION_TARGETS}"; then
-  kube::codegen::gen_openapi \
-    --input-pkg-root ${APIS_ROOT} \
-    --output-pkg-root ${CLIENT_GENERATOR_OUT} \
-    --output-base "${GOPATH:-"/go"}/src" \
-    --boilerplate "${BOILERPLATE_PATH}"
-fi
-
 CLIENTSET_NAME="${CLIENTSET_NAME:-"clientset"}"
 VERSIONED_NAME="${VERSIONED_NAME:-"versioned"}"
 
@@ -79,6 +62,15 @@ if grep -qw "client" <<<"${GENERATION_TARGETS}"; then
     $applyconfig_opts $watch_opts \
     --input-pkg-root ${APIS_ROOT} \
     --output-pkg-root ${CLIENT_GENERATOR_OUT} \
+    --output-base "${GOPATH:-"/go"}/src" \
+    --boilerplate "${BOILERPLATE_PATH}"
+fi
+
+if grep -qw "openapi" <<<"${GENERATION_TARGETS}"; then  
+  kube::codegen::gen_openapi \
+    --input-pkg-root ${APIS_ROOT} \
+    --output-pkg-root ${CLIENT_GENERATOR_OUT} \
+    --report-filename ${OPENAPI_VIOLATION_EXCEPTIONS:-"/go/k8s-validation_exceptions.list"} \
     --output-base "${GOPATH:-"/go"}/src" \
     --boilerplate "${BOILERPLATE_PATH}"
 fi

@@ -35,6 +35,7 @@ RUN wget http://github.com/kubernetes/kubernetes/archive/v${KUBE_VERSION}.tar.gz
     rm -rf /go/pkg
 
 COPY hack/install-protoc.sh /go/install-protoc.sh
+COPY hack/k8s-validation_exceptions.list /go/k8s-validation_exceptions.list
 RUN /go/install-protoc.sh
 ENV PATH="${PATH}:/go/protoc"
 

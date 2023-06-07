@@ -9,7 +9,7 @@ import (
 	comicv1 "github.com/phosae/kube-code-generator/example/apis/comic/v1"
 	versioned "github.com/phosae/kube-code-generator/example/client/clientset/versioned"
 	internalinterfaces "github.com/phosae/kube-code-generator/example/client/informers/externalversions/internalinterfaces"
-	v1 "github.com/phosae/kube-code-generator/example/client/lister/comic/v1"
+	v1 "github.com/phosae/kube-code-generator/example/client/listers/comic/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	watch "k8s.io/apimachinery/pkg/watch"

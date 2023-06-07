@@ -31,33 +31,33 @@ const (
 // +kubebuilder:resource:singular=hero,path=heroes,shortName=he;sh,scope=Namespaced,categories=heroes;superheroes
 type Hero struct {
 	metav1.TypeMeta   `json:",inline"`
-	metav1.ObjectMeta `json:"metadata,omitempty"`
+	metav1.ObjectMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
 
-	Spec   HeroSpec   `json:"spec,omitempty"`
-	Status HeroStatus `json:"status,omitempty"`
+	Spec   HeroSpec   `json:"spec,omitempty" protobuf:"bytes,2,opt,name=spec"`
+	Status HeroStatus `json:"status,omitempty" protobuf:"bytes,3,opt,name=status"`
 }
 
 // HeroSpec is the spec of a Hero.
 type HeroSpec struct {
 	// +kubebuilder:validation:Required
 	// +kubebuilder:validation:MaxLength=128
-	Name string `json:"name"`
+	Name string `json:"name" protobuf:"bytes,1,opt,name=name"`
 	// +optional
-	City string `json:"city,omitempty"`
+	City string `json:"city,omitempty" protobuf:"bytes,2,opt,name=city"`
 	// +kubebuilder:validation:Required
 	// +kubebuilder:validation:Enum=unknown;superhero;antihero;villain
 	// +kubebuilder:default=unknown
-	Kind HeroType `json:"kind"`
+	Kind HeroType `json:"kind" protobuf:"bytes,3,opt,name=kind,casttype=HeroType"`
 	// +optional
-	BirthDate *metav1.Time `json:"birthDate"`
+	BirthDate *metav1.Time `json:"birthDate" protobuf:"bytes,4,opt,name=birthDate"`
 	// +listType=map
 	// +optional
-	SuperPowers []string `json:"superPowers"`
+	SuperPowers []string `json:"superPowers" protobuf:"bytes,5,rep,name=superPowers"`
 }
 
 type HeroStatus struct {
-	Moving      bool   `json:"moving"`
-	CurrentCity string `json:"currentCity"`
+	Moving      bool   `json:"moving" protobuf:"varint,1,opt,name=moving"`
+	CurrentCity string `json:"currentCity" protobuf:"bytes,2,opt,name=currentCity"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
@@ -65,7 +65,7 @@ type HeroStatus struct {
 // HeroList is a list of Hero resources.
 type HeroList struct {
 	metav1.TypeMeta `json:",inline"`
-	metav1.ListMeta `json:"metadata"`
+	metav1.ListMeta `json:"metadata" protobuf:"bytes,1,opt,name=metadata"`
 
-	Items []Hero `json:"items"`
+	Items []Hero `json:"items" protobuf:"bytes,2,rep,name=items"`
 }

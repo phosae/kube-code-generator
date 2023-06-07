@@ -26,6 +26,8 @@ generate-client:
 generate-openapi:
 	docker run -it --rm \
 	-v $(DIRECTORY):/go/src/github.com/phosae/kube-code-generator \
+	-v $(DIRECTORY)/example/openapi-validation-exceptions.list:/tmp/validation-exceptions.list \
+	-e OPENAPI_VIOLATION_EXCEPTIONS="/tmp/validation-exceptions.list" \
 	-e PROJECT_PACKAGE=$(PROJECT_PACKAGE) \
 	-e CLIENT_GENERATOR_OUT=$(PROJECT_PACKAGE)/generated \
 	-e APIS_ROOT=$(PROJECT_PACKAGE)/apis \
