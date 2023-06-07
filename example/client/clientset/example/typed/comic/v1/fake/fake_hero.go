@@ -8,7 +8,7 @@ import (
 	"fmt"
 
 	v1 "github.com/phosae/kube-code-generator/example/apis/comic/v1"
-	comicv1 "github.com/phosae/kube-code-generator/example/client/applyconfiguration/comic/v1"
+	comicv1 "github.com/phosae/kube-code-generator/example/client/applyconfigurations/comic/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	labels "k8s.io/apimachinery/pkg/labels"
 	types "k8s.io/apimachinery/pkg/types"

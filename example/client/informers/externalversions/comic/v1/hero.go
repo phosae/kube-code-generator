@@ -7,7 +7,7 @@ import (
 	time "time"
 
 	comicv1 "github.com/phosae/kube-code-generator/example/apis/comic/v1"
-	versioned "github.com/phosae/kube-code-generator/example/client/clientset/versioned"
+	example "github.com/phosae/kube-code-generator/example/client/clientset/example"
 	internalinterfaces "github.com/phosae/kube-code-generator/example/client/informers/externalversions/internalinterfaces"
 	v1 "github.com/phosae/kube-code-generator/example/client/listers/comic/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -31,14 +31,14 @@ type heroInformer struct {
 // NewHeroInformer constructs a new informer for Hero type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewHeroInformer(client versioned.Interface, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
+func NewHeroInformer(client example.Interface, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
 	return NewFilteredHeroInformer(client, resyncPeriod, indexers, nil)
 }
 
 // NewFilteredHeroInformer constructs a new informer for Hero type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewFilteredHeroInformer(client versioned.Interface, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
+func NewFilteredHeroInformer(client example.Interface, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
 	return cache.NewSharedIndexInformer(
 		&cache.ListWatch{
 			ListFunc: func(options metav1.ListOptions) (runtime.Object, error) {
@@ -60,7 +60,7 @@ func NewFilteredHeroInformer(client versioned.Interface, resyncPeriod time.Durat
 	)
 }
 
-func (f *heroInformer) defaultInformer(client versioned.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
+func (f *heroInformer) defaultInformer(client example.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
 	return NewFilteredHeroInformer(client, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc}, f.tweakListOptions)
 }
 

@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	v1 "github.com/phosae/kube-code-generator/example/apis/comic/v1"
-	"github.com/phosae/kube-code-generator/example/client/clientset/versioned/scheme"
+	"github.com/phosae/kube-code-generator/example/client/clientset/example/scheme"
 	rest "k8s.io/client-go/rest"
 )
 

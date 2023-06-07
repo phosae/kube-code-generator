@@ -3,7 +3,7 @@
 package fake
 
 import (
-	v1 "github.com/phosae/kube-code-generator/example/client/clientset/versioned/typed/comic/v1"
+	v1 "github.com/phosae/kube-code-generator/example/client/clientset/example/typed/comic/v1"
 	rest "k8s.io/client-go/rest"
 	testing "k8s.io/client-go/testing"
 )

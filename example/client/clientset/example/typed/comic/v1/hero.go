@@ -9,8 +9,8 @@ import (
 	"time"
 
 	v1 "github.com/phosae/kube-code-generator/example/apis/comic/v1"
-	comicv1 "github.com/phosae/kube-code-generator/example/client/applyconfiguration/comic/v1"
-	scheme "github.com/phosae/kube-code-generator/example/client/clientset/versioned/scheme"
+	comicv1 "github.com/phosae/kube-code-generator/example/client/applyconfigurations/comic/v1"
+	scheme "github.com/phosae/kube-code-generator/example/client/clientset/example/scheme"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
 	watch "k8s.io/apimachinery/pkg/watch"

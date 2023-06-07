@@ -5,14 +5,14 @@ package internalinterfaces
 import (
 	time "time"
 
-	versioned "github.com/phosae/kube-code-generator/example/client/clientset/versioned"
+	example "github.com/phosae/kube-code-generator/example/client/clientset/example"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	cache "k8s.io/client-go/tools/cache"
 )
 
-// NewInformerFunc takes versioned.Interface and time.Duration to return a SharedIndexInformer.
-type NewInformerFunc func(versioned.Interface, time.Duration) cache.SharedIndexInformer
+// NewInformerFunc takes example.Interface and time.Duration to return a SharedIndexInformer.
+type NewInformerFunc func(example.Interface, time.Duration) cache.SharedIndexInformer
 
 // SharedInformerFactory a small interface to allow for adding an informer without an import cycle
 type SharedInformerFactory interface {

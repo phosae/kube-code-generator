@@ -19,7 +19,10 @@ generate-helpers:
 	-e GENERATION_TARGETS="helpers" \
 	$(IMAGE)
 
-.PHONY: generate-client
+
+# client/clientset/example/... seems bits of werid, but kube_codegen.sh can only do this now
+# writing custom scripts using client-gen, lister-gen, informer-gen, applyconfiguration-gen directly  
+#  can output client like client-go/kubernetes (without clientset in middle)
 generate-client: generate-helpers
 	docker run -it --rm \
 	-v $(DIRECTORY):/go/src/github.com/phosae/kube-code-generator \
@@ -27,7 +30,10 @@ generate-client: generate-helpers
 	-e CLIENT_GENERATOR_OUT=$(PROJECT_PACKAGE)/client \
 	-e APIS_ROOT=$(PROJECT_PACKAGE)/apis \
 	-e GENERATION_TARGETS="client" \
+	-e CLIENTSET_NAME="clientset" \
+	-e VERSIONED_NAME="example" \
 	-e WITH_APPLYCONFIG="true" \
+	-e APPLYCONFIG_NAME="applyconfigurations" \
 	-e WITH_WATCH="" \
 	$(IMAGE)
 
@@ -49,7 +55,6 @@ generate-proto:
     $(IMAGE) \
     update-generated-protobuf.sh $(PROJECT_PACKAGE)/apis/comic/v1
 
-.PHONY: generate-crd
 generate-crd:
 	docker run -it --rm \
 	-v $(DIRECTORY)/example:/src \
