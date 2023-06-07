@@ -64,7 +64,7 @@ VERSIONED_NAME="${VERSIONED_NAME:-"versioned"}"
 # used by client with-applyconfig
 APPLYCONFIG_NAME="${APPLYCONFIG_NAME:-"applyconfiguration"}"
 # used by client with watch
-LISTERS_NAME="${LISTER_NAME:-"lister"}"
+LISTERS_NAME="${LISTER_NAME:-"listers"}"
 INFORMERS_NAME="${INFORMERS_NAME:-"informers"}"
 
 if grep -qw "client" <<<"${GENERATION_TARGETS}"; then
