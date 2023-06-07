@@ -11,14 +11,22 @@ default: generate
 .PHONY: generate
 generate: generate-client generate-crd generate-openapi generate-proto
 
+generate-helpers:
+	docker run -it --rm \
+	-v $(DIRECTORY):/go/src/github.com/phosae/kube-code-generator \
+	-e PROJECT_PACKAGE=$(PROJECT_PACKAGE) \
+	-e APIS_ROOT=$(PROJECT_PACKAGE)/apis \
+	-e GENERATION_TARGETS="helpers" \
+	$(IMAGE)
+
 .PHONY: generate-client
-generate-client:
+generate-client: generate-helpers
 	docker run -it --rm \
 	-v $(DIRECTORY):/go/src/github.com/phosae/kube-code-generator \
 	-e PROJECT_PACKAGE=$(PROJECT_PACKAGE) \
 	-e CLIENT_GENERATOR_OUT=$(PROJECT_PACKAGE)/client \
 	-e APIS_ROOT=$(PROJECT_PACKAGE)/apis \
-	-e GENERATION_TARGETS="helpers,client" \
+	-e GENERATION_TARGETS="client" \
 	-e WITH_APPLYCONFIG="true" \
 	-e WITH_WATCH="" \
 	$(IMAGE)
@@ -27,10 +35,10 @@ generate-openapi:
 	docker run -it --rm \
 	-v $(DIRECTORY):/go/src/github.com/phosae/kube-code-generator \
 	-v $(DIRECTORY)/example/openapi-validation-exceptions.list:/tmp/validation-exceptions.list \
-	-e OPENAPI_VIOLATION_EXCEPTIONS="/tmp/validation-exceptions.list" \
 	-e PROJECT_PACKAGE=$(PROJECT_PACKAGE) \
-	-e CLIENT_GENERATOR_OUT=$(PROJECT_PACKAGE)/generated \
 	-e APIS_ROOT=$(PROJECT_PACKAGE)/apis \
+	-e OPENAPI_VIOLATION_EXCEPTIONS="/tmp/validation-exceptions.list" \
+	-e OPENAPI_GENERATOR_OUT=$(PROJECT_PACKAGE)/generated \
 	-e GENERATION_TARGETS="openapi" \
 	$(IMAGE)
 
