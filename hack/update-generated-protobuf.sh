@@ -7,7 +7,7 @@
 set -eufo pipefail
 
 BOILERPLATE_PATH=/tmp/fake-boilerplate.txt
-touch "${BOILERPLATE_PATH}"
+[[ -f ${BOILERPLATE_PATH} ]] || touch ${BOILERPLATE_PATH}
 
 go-to-protobuf \
     --proto-import=/go/src \

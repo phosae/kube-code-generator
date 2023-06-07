@@ -39,7 +39,7 @@ RELATIVE_ROOT_PATH=$(realpath --relative-to="${PWD}" /)
 CODEGEN_PKG=${RELATIVE_ROOT_PATH}${GOPATH}/src/k8s.io/code-generator
 
 BOILERPLATE_PATH=/tmp/fake-boilerplate.txt
-touch "${BOILERPLATE_PATH}"
+[[ -f ${BOILERPLATE_PATH} ]] || touch ${BOILERPLATE_PATH}
 
 source "${CODEGEN_PKG}/kube_codegen.sh"
 
